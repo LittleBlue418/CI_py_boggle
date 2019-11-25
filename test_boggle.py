@@ -50,6 +50,30 @@ class TestBoggle(unittest.TestCase):
         self.assertIn((2, 2), neighbours)
         self.assertIn((2, 3), neighbours)
 
+    def test_all_grid_neighbours(self):
+        #Ensure that all of the grid positions have neighbors
+        grid = boggle.make_grid(2, 2)
+        neighbors = boggle.all_grid_neighbours(grid)
+        self.assertEqual(len(neighbors), len(grid))
+        for pos in grid:
+            others = list(grid) # Creates a new list from the dictionary's keys
+            others.remove(pos)
+            self.assertListEqual(sorted(neighbours[pos]), sorted(others))
+
+    def test_converting_a_path_to_a_word(self):
+        # Ensure that paths can be converted to words
+        # The path to word function should return the same
+        # strings that we manualy construct in the test
+        grid = boggle.make_grid(2, 2)
+        oneLetterWord = boggle.path_to_word(grid, [(0, 0)])
+        twoLetterWord = boggle.path_to_word(grid)
+
+        self.assertEqual(oneLetterWord, grid [(0, 0)])
+        self.assertEqual(twoLetterWord, grid[(0, 0)] + grid [(1, 1)])
+
+
+
+
 
 # class test_boggle(unittest.TestCase):
 #    def test_is_this_thing_on(self):
